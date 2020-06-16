@@ -1,0 +1,25 @@
+<ul class="list-unstyled">
+  <% dreams.each do |dream| %>
+    <li class="media mb-3 row">
+      <div class = "col-sm-2">
+        <img class="mr-2 rounded" src="<%= gravatar_url(dream.user, { size: 50 }) %>" alt="">
+        <%= link_to dream.user.name, user_path(dream.user) %> 
+      </div>
+      <div class="media-body col-sm-10">
+        <div>
+          <p><%= dream.content %></p>
+        </div>
+        <div class='row'>
+          <p class='col-sm-9'>コメント内容</p>
+          <p class='col-sm-3'>コメントする</p>
+        </div>
+        <div>
+          <% if current_user == dream.user %>
+            <%= link_to "Delete", dream, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <%= paginate dreams %>
+</ul>
