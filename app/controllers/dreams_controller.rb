@@ -4,7 +4,7 @@ class DreamsController < ApplicationController
   
   def index
     if logged_in?
-      @dreams = Dream.all.order(id: :desc).page(params[:page])
+      @dreams = current_user.feed_dreams.order(id: :desc).page(params[:page])
     end 
   end 
   
@@ -23,7 +23,7 @@ class DreamsController < ApplicationController
       flash[:success] = '投稿完了しました。'
       redirect_to dreams_url
     else
-      @dreams = current_user.dreams.order(id: :desc).page(params[:page])
+      @dreams = current_user.feed_dreams.order(id: :desc).page(params[:page])
       flash.now[:danger] = '投稿に失敗しました。'
       render 'dreams/new'
     end
