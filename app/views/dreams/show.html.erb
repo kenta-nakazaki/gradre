@@ -46,6 +46,9 @@
       <div>
         <a href="/users/<%= @dream.user.id %>"><%= comment.user.name %></a>
         <%= comment.comment %>
+        <% if current_user == comment.user %>
+          <%= link_to "Delete", comment_path(comment.id), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+        <% end %>
         <hr>
       </div>
     </li>

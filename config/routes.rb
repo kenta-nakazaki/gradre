@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :dreams, only: [:create, :destroy, :show, :new, :index] do
     resources :comments, only: [:create]
   end
+  resources :comments, only: [:destroy]
   
   resources :relationships, only: [:create, :destroy]
   

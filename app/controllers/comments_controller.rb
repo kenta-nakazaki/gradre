@@ -11,9 +11,16 @@ class CommentsController < ApplicationController
       redirect_to @dream
     else
       @dreams = current_user.feed_dreams.order(id: :desc).page(params[:page])
-      flash.now[:danger] = "コメントに失敗しました。"
+      flash[:danger] = "コメントに失敗しました。"
       redirect_back(fallback_location: dreams_path)
     end
+  end
+  
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    flash[:success] = '投稿を削除しました。'
+    redirect_back(fallback_location: @dream)
   end
   
   private
