@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_16_072716) do
+ActiveRecord::Schema.define(version: 2020_06_16_105951) do
+
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "dream_id"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dream_id"], name: "index_comments_on_dream_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "dreams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
@@ -43,6 +53,8 @@ ActiveRecord::Schema.define(version: 2020_06_16_072716) do
     t.text "introduction"
   end
 
+  add_foreign_key "comments", "dreams"
+  add_foreign_key "comments", "users"
   add_foreign_key "dreams", "users"
   add_foreign_key "relationships", "users"
   add_foreign_key "relationships", "users", column: "follow_id"

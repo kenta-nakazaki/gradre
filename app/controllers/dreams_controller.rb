@@ -16,6 +16,8 @@ class DreamsController < ApplicationController
 
   def show
     @dream = Dream.find(params[:id])
+    @comments = @dream.comments.order(id: :desc).page(params[:page])
+    @comment = Comment.new
   end 
   
   def create
@@ -48,5 +50,6 @@ class DreamsController < ApplicationController
       redirect_to dreams_url
     end
   end
+  
   
 end

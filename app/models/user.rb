@@ -7,11 +7,12 @@ class User < ApplicationRecord
   validates :introduction, length: {maximum:200}
   has_secure_password
   
-  has_many :dreams
+  has_many :dreams, dependent: :destroy
   has_many :relationships
   has_many :followings, through: :relationships, source: :follow
   has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
   has_many :followers, through: :reverses_of_relationship, source: :user
+  has_many :comments
   
   def follow(other_user)
     unless self == other_user
@@ -31,4 +32,5 @@ class User < ApplicationRecord
   def feed_dreams
     Dream.where(user_id: self.following_ids + [self.id])
   end 
+  
 end
